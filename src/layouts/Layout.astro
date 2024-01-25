@@ -19,7 +19,7 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Header />
+    <!-- <Header /> -->
     <slot />
     <Footer />
   </body>
@@ -43,36 +43,22 @@ const { title } = Astro.props;
   }
 
   body {
-    display: grid;
-    grid-template-areas:
-      'header'
-      'main'
-      'footer';
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100vh;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-  header,
-  main,
   footer {
-    padding: 20px;
-  }
-
-  header {
-    grid-area: header;
-    background-color: #2a1f47;
-  }
-
-  footer {
-    grid-area: footer;
+    flex-shrink: 1;
     background-color: #244e61;
   }
 
   main {
-    grid-area: main;
+    flex-grow: 1;
     background-color: #191621;
   }
   code {
