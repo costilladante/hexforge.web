@@ -4,6 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      backgroundImage: {
+        'hexagon-pattern': "url('/hexagrid.svg')",
+      },
       colors: {
         primary: {
           50: '#ECFBFD',
