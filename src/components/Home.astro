@@ -34,17 +34,19 @@
   // Then update the top and left of the light element to match the touch position.
   if (hexGrid && hexLight) {
     hexGrid.addEventListener('touchmove', (event: TouchEvent) => {
+      // Get the boundaries of the hexGrid element.
+      const hexGridRect = hexGrid.getBoundingClientRect();
+
+      // Get the boundaries of the hexLight element.
+      const hexLightRect = hexLight.getBoundingClientRect();
+
       const touchX = event.touches[0].clientX;
       const touchY = event.touches[0].clientY;
-
-      // Get the boundaries of the hexGrid element.
-      const boundaryRect = hexGrid.getBoundingClientRect();
-
       if (
-        touchX >= boundaryRect.left &&
-        touchX <= boundaryRect.right &&
-        touchY >= boundaryRect.top &&
-        touchY <= boundaryRect.bottom
+        touchX >= hexGridRect.left &&
+        touchX + hexLightRect.width / 2 <= hexGridRect.right &&
+        touchY >= hexGridRect.top &&
+        touchY <= hexGridRect.bottom
       ) {
         hexLight.style.left = `${touchX}px`;
         hexLight.style.top = `${touchY}px`;
