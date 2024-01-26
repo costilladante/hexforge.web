@@ -1,11 +1,11 @@
 ---
-import Home from './Home.astro';
+import Home from './Home.tsx';
 ---
 
 <main
   class='bg-secondary-50 text-secondary-950 dark:bg-darkSecondary-900 dark:text-primary-50'
 >
-  <Home />
+  <Home client:load />
   <div>About Me</div>
   <div>Skills</div>
   <div>Experience</div>
