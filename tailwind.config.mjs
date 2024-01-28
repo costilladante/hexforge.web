@@ -6,6 +6,7 @@ export default {
     extend: {
       backgroundImage: {
         'hexagon-pattern': "url('/hexagrid.svg')",
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       colors: {
         primary: {
