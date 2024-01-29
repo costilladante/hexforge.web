@@ -17,6 +17,7 @@
 			bg-hexagon-pattern
 			bg-[length:160px] md:bg-[length:200px]
 			left-0
+			top-0
 			w-full
 			h-full
 			z-10'
@@ -45,36 +46,44 @@
     const hexLight = document.querySelector('#hex-light') as HTMLElement;
     const hexGrid = document.querySelector('#hex-grid') as HTMLElement;
 
-    // Set a mousemove event listener on the grid element.
-    // Then update the top and left of the light element to match the mouse position.
+    const handleLightMove = (userX: number, userY: number) => {
+      // Get the boundaries of the hexGrid element.
+      const hexGridRect = hexGrid.getBoundingClientRect();
+
+      // Get the boundaries of the hexLight element.
+      const hexLightRect = hexLight.getBoundingClientRect();
+
+      // Check boundaries
+      const isInsideXBoundary =
+        userX >= hexGridRect.left &&
+        userX + hexLightRect.width / 2 <= hexGridRect.right;
+      const isInsideYBoundary =
+        userY >= hexGridRect.top && userY <= hexGridRect.bottom;
+
+      if (isInsideXBoundary) {
+        hexLight.style.left = `${userX}px`;
+      }
+      if (isInsideYBoundary) {
+        hexLight.style.top = `${userY}px`;
+      }
+      return isInsideXBoundary && isInsideYBoundary;
+    };
+
     if (hexGrid && hexLight) {
+      // Set a mousemove event listener on the grid element.
+      // Then update the top and left of the light element to match the mouse position.
       hexGrid.addEventListener('mousemove', (event: MouseEvent) => {
-        hexLight.style.left = event.clientX + 'px';
-        hexLight.style.top = event.clientY + 'px';
+        if (!handleLightMove(event.clientX, event.clientY)) {
+          event.preventDefault();
+        }
       });
-    }
 
-    // Set a touch event listener on the grid element.
-    // Then update the top and left of the light element to match the touch position.
-    if (hexGrid && hexLight) {
+      // Set a touch event listener on the grid element.
+      // Then update the top and left of the light element to match the touch position.
       hexGrid.addEventListener('touchmove', (event: TouchEvent) => {
-        // Get the boundaries of the hexGrid element.
-        const hexGridRect = hexGrid.getBoundingClientRect();
-
-        // Get the boundaries of the hexLight element.
-        const hexLightRect = hexLight.getBoundingClientRect();
-
         const touchX = event.touches[0].clientX;
         const touchY = event.touches[0].clientY;
-        if (
-          touchX >= hexGridRect.left &&
-          touchX + hexLightRect.width / 2 <= hexGridRect.right &&
-          touchY >= hexGridRect.top &&
-          touchY <= hexGridRect.bottom
-        ) {
-          hexLight.style.left = `${touchX}px`;
-          hexLight.style.top = `${touchY}px`;
-        } else {
+        if (!handleLightMove(touchX, touchY)) {
           event.preventDefault();
         }
       });
